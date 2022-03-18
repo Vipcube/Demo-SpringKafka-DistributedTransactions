@@ -1,6 +1,18 @@
 version: '3.7'
 
 services:
+  mariadb:
+    image: mariadb:10.6.7
+    hostname: mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: ${MARIADB_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${MARIADB_PASSWORD}
+      MYSQL_DATABASE: ${MARIADB_DATABASE}
+    networks:
+      - messagequeue
+
   zookeeper:
     image: confluentinc/cp-zookeeper:6.1.4
     hostname: zookeeper
