@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +20,6 @@ public class CustomerFund implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private int amountAvailable;
-	private int amountReserved;
+	private BigDecimal amountAvailable;
+	private BigDecimal amountReserved;
 }
