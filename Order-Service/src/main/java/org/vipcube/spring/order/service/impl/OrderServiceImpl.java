@@ -18,19 +18,12 @@ public class OrderServiceImpl implements IOrderService {
 				.price( orderPayment.getPrice() )
 				.build();
 
-		if ( orderPayment.getStatus()
-				.equals( OrderStatus.ACCEPT ) && orderInventory.getStatus()
-				.equals( OrderStatus.ACCEPT ) ) {
+		if ( OrderStatus.ACCEPT == orderPayment.getStatus() && OrderStatus.ACCEPT == orderInventory.getStatus() ) {
 			order.setStatus( OrderStatus.CONFIRMED );
-		} else if ( orderPayment.getStatus()
-				.equals( OrderStatus.REJECT ) && orderInventory.getStatus()
-				.equals( OrderStatus.REJECT ) ) {
+		} else if ( OrderStatus.REJECT == orderPayment.getStatus() && OrderStatus.REJECT == orderInventory.getStatus() ) {
 			order.setStatus( OrderStatus.REJECT );
-		} else if ( orderPayment.getStatus()
-				.equals( OrderStatus.REJECT ) || orderInventory.getStatus()
-				.equals( OrderStatus.REJECT ) ) {
-			ServiceSource source = orderPayment.getStatus()
-					.equals( OrderStatus.REJECT ) ? ServiceSource.PAYMENT : ServiceSource.INVENTORY;
+		} else if ( OrderStatus.REJECT == orderPayment.getStatus() || OrderStatus.REJECT == orderInventory.getStatus() ) {
+			ServiceSource source = OrderStatus.REJECT == orderPayment.getStatus() ? ServiceSource.PAYMENT : ServiceSource.INVENTORY;
 			order.setStatus( OrderStatus.ROLLBACK );
 			order.setSource( source );
 		}
