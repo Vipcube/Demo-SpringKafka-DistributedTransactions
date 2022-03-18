@@ -16,7 +16,7 @@ public class PaymentProcessService {
 	}
 
 	@KafkaListener( id = "orders", topics = "orders", groupId = "payment")
-	public void onEvent( Order order ) {
+	public void onOrder( Order order ) {
 		log.info( "PaymentProcessService: Received order: {}" , order );
 		if ( OrderStatus.NEW == order.getStatus() ) {
 			this.orderPaymentService.reserve( order );
