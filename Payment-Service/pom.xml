@@ -15,7 +15,7 @@
 	<name>The payment service of spring kafka microservices</name>
 
 	<description>
-		This payment service module is performs on the customer account basing on the order price.
+		This payment service module is used customer account to performs payment order price.
 	</description>
 
 	<dependencies>
