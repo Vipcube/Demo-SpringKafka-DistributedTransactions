@@ -90,5 +90,6 @@
 		<module>Domain-DTO</module>
 		<module>Order-Service</module>
 		<module>Payment-Service</module>
+		<module>Inventory-Service</module>
 	</modules>
 </project>
