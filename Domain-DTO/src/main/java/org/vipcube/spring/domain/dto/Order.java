@@ -17,6 +17,7 @@ public class Order {
 	private Long productId;
 	private int productCount;
 	private BigDecimal price;
-	private OrderStatus status;
+	@Builder.Default
+	private OrderStatus status = OrderStatus.NEW;
 	private ServiceSource source;
 }
