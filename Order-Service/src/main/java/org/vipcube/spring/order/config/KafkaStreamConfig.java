@@ -18,10 +18,10 @@ import java.time.Duration;
 @Slf4j
 @Configuration
 public class KafkaStreamConfig {
-	private final IOrderService orderManageService;
+	private final IOrderService orderService;
 
-	public KafkaStreamConfig( IOrderService orderManageService ) {
-		this.orderManageService = orderManageService;
+	public KafkaStreamConfig( IOrderService orderService ) {
+		this.orderService = orderService;
 	}
 
 	@Bean
@@ -29,7 +29,7 @@ public class KafkaStreamConfig {
 		JsonSerde<Order> orderSerde = new JsonSerde<>( Order.class );
 		KStream<Long, Order> stream = builder.stream( "payment-orders", Consumed.with( Serdes.Long(), orderSerde ) );
 
-		stream.join( builder.stream( "inventory-orders" ), this.orderManageService::confirm,
+		stream.join( builder.stream( "inventory-orders" ), this.orderService::confirm,
 						JoinWindows.of( Duration.ofSeconds( 10 ) ), StreamJoined.with( Serdes.Long(), orderSerde, orderSerde ) )
 				.peek( ( k, o ) -> log.info( "OrderService: Current stream order: {}", o ) )
 				.to( "orders" );
