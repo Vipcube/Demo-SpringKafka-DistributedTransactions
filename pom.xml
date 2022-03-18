@@ -39,6 +39,11 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>net.datafaker</groupId>
+				<artifactId>datafaker</artifactId>
+				<version>1.2.0</version>
+			</dependency>
+			<dependency>
 				<groupId>org.vipcube.spring</groupId>
 				<artifactId>domain-dto</artifactId>
 				<version>${project.version}</version>
@@ -84,5 +89,6 @@
 	<modules>
 		<module>Domain-DTO</module>
 		<module>Order-Service</module>
+		<module>Payment-Service</module>
 	</modules>
 </project>
