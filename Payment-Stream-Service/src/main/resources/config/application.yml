@@ -12,10 +12,12 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.LongSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        max.block.ms: 60000
     streams:
       properties:
-        commit.interval.ms: 0
-        processing.guarantee: exactly_once
+        #commit.interval.ms: 0
+        #processing.guarantee: exactly_once
         default.key.serde: org.apache.kafka.common.serialization.Serdes$LongSerde
         default.value.serde: org.springframework.kafka.support.serializer.JsonSerde
         spring.json.trusted.packages: "*"
