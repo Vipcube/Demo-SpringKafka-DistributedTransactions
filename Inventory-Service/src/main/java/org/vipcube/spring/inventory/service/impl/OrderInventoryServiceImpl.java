@@ -42,17 +42,16 @@ public class OrderInventoryServiceImpl implements IOrderInventoryService {
 				.orElseThrow();
 		log.info( "OrderInventoryService: Found product: {}", product );
 
-		if ( OrderStatus.NEW == order.getStatus() ) {
-			if ( order.getProductCount() < product.getAvailableItems() ) {
-				product.setReservedItems( product.getReservedItems() + order.getProductCount() );
-				product.setAvailableItems( product.getAvailableItems() - order.getProductCount() );
-				order.setStatus( OrderStatus.ACCEPT );
-				this.repository.save( product );
-			} else {
-				order.setStatus( OrderStatus.REJECT );
-			}
-			template.send( "inventory-orders", order.getId(), order );
-			log.info( "OrderInventoryService: Send customer order: {}", order );
+		order.setSource( ServiceSource.INVENTORY );
+		if ( order.getProductCount() < product.getAvailableItems() ) {
+			product.setReservedItems( product.getReservedItems() + order.getProductCount() );
+			product.setAvailableItems( product.getAvailableItems() - order.getProductCount() );
+			order.setStatus( OrderStatus.ACCEPT );
+			this.repository.save( product );
+		} else {
+			order.setStatus( OrderStatus.REJECT );
 		}
+		template.send( "inventory-orders", order.getId(), order );
+		log.info( "OrderInventoryService: Send customer order: {}", order );
 	}
 }

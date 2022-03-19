@@ -16,21 +16,24 @@ import java.util.Objects;
 public class InventoryAggregatorService implements Aggregator<Long, Order, Product> {
 	private final KafkaTemplate<Long, Order> template;
 
-	public InventoryAggregatorService( KafkaTemplate<Long, Order> template ){
+	public InventoryAggregatorService( KafkaTemplate<Long, Order> template ) {
 		this.template = template;
 	}
 
 	@Override
 	public Product apply( Long aLong, Order order, Product product ) {
-		switch (order.getStatus()) {
+		switch ( order.getStatus() ) {
 		case CONFIRMED:
 			product.setReservedItems( product.getReservedItems() - order.getProductCount() );
+			break;
 		case ROLLBACK:
-			if ( ServiceSource.INVENTORY != order.getSource() ){
+			if ( ServiceSource.INVENTORY != order.getSource() ) {
 				product.setReservedItems( product.getReservedItems() - order.getProductCount() );
 				product.setAvailableItems( product.getAvailableItems() + order.getProductCount() );
 			}
+			break;
 		case NEW:
+			order.setSource( ServiceSource.INVENTORY );
 			if ( order.getProductCount() < product.getAvailableItems() ) {
 				product.setReservedItems( product.getReservedItems() + order.getProductCount() );
 				product.setAvailableItems( product.getAvailableItems() - order.getProductCount() );
@@ -39,7 +42,13 @@ public class InventoryAggregatorService implements Aggregator<Long, Order, Produ
 				order.setStatus( OrderStatus.REJECT );
 			}
 			template.send( "inventory-orders", order.getId(), order )
-					.addCallback( result -> log.info("InventoryAggregatorService: Sent: {}", Objects.nonNull( result ) ? result.getProducerRecord().value() : null), ex -> {});
+					.addCallback( result -> log.info( "InventoryAggregatorService: Sent: {}",
+							Objects.nonNull( result ) ?
+									result.getProducerRecord()
+											.value() :
+									null ), ex -> {
+					} );
+			break;
 		}
 		return product;
 	}
