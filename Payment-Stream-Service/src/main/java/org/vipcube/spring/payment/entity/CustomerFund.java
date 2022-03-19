@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerFund implements Serializable {
-	private BigDecimal amountAvailable;
-	private BigDecimal amountReserved;
+	@Builder.Default
+	private BigDecimal amountAvailable = BigDecimal.ZERO;
+	@Builder.Default
+	private BigDecimal amountReserved = BigDecimal.ZERO;
 }

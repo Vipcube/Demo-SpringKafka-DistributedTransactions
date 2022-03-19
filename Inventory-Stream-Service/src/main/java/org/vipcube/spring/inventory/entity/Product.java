@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
-	private int availableItems;
-	private int reservedItems;
+	@Builder.Default
+	private int availableItems = 0;
+	@Builder.Default
+	private int reservedItems = 0;
 }
