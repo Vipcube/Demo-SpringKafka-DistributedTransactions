@@ -5,6 +5,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.vipcube.spring.domain.dto.Order;
 import org.vipcube.spring.domain.dto.OrderStatus;
+import org.vipcube.spring.domain.dto.ServiceSource;
 import org.vipcube.spring.inventory.entity.Product;
 import org.vipcube.spring.inventory.repository.ProductRepository;
 import org.vipcube.spring.inventory.service.IOrderInventoryService;
@@ -28,7 +29,7 @@ public class OrderInventoryServiceImpl implements IOrderInventoryService {
 		if ( OrderStatus.CONFIRMED == order.getStatus() ) {
 			product.setReservedItems( product.getReservedItems() - order.getProductCount() );
 			this.repository.save( product );
-		} else {
+		} else if ( OrderStatus.ROLLBACK == order.getStatus() && ServiceSource.INVENTORY != order.getSource() ) {
 			product.setReservedItems( product.getReservedItems() - order.getProductCount() );
 			product.setAvailableItems( product.getAvailableItems() + order.getProductCount() );
 			this.repository.save( product );

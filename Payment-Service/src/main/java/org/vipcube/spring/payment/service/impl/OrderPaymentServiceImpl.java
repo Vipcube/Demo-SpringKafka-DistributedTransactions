@@ -30,7 +30,7 @@ public class OrderPaymentServiceImpl implements IOrderPaymentService {
 			this.repository.save( customerFund );
 		} else if ( OrderStatus.ROLLBACK == order.getStatus() && ServiceSource.PAYMENT != order.getSource() ){
 			customerFund.setAmountReserved( customerFund.getAmountReserved().subtract( order.getPrice() ) );
-			customerFund.setAmountReserved( customerFund.getAmountAvailable().add( order.getPrice() ) );
+			customerFund.setAmountAvailable( customerFund.getAmountAvailable().add( order.getPrice() ) );
 			this.repository.save( customerFund );
 		}
 	}
