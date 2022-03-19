@@ -92,5 +92,6 @@
 		<module>Payment-Service</module>
 		<module>Inventory-Service</module>
 		<module>Payment-Stream-Service</module>
+		<module>Inventory-Stream-Service</module>
 	</modules>
 </project>
