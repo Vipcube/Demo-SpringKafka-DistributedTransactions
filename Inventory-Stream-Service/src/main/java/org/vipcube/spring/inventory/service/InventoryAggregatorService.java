@@ -9,6 +9,8 @@ import org.vipcube.spring.domain.dto.OrderStatus;
 import org.vipcube.spring.domain.dto.ServiceSource;
 import org.vipcube.spring.inventory.entity.Product;
 
+import java.util.Objects;
+
 @Slf4j
 @Service
 public class InventoryAggregatorService implements Aggregator<Long, Order, Product> {
@@ -36,8 +38,8 @@ public class InventoryAggregatorService implements Aggregator<Long, Order, Produ
 			} else {
 				order.setStatus( OrderStatus.REJECT );
 			}
-			template.send( "inventory-orders", order.getId(), order );
-			log.info( "InventoryAggregatorService: Send customer order: {}", order );
+			template.send( "inventory-orders", order.getId(), order )
+					.addCallback( result -> log.info("InventoryAggregatorService: Sent: {}", Objects.nonNull( result ) ? result.getProducerRecord().value() : null), ex -> {});
 		}
 		return product;
 	}
