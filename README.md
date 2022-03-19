@@ -1,8 +1,8 @@
-# The demo of spring kafka microservices project
+# The Demo of Distributed Transactions in Spring Kafka Microservices
 
 ## Overview
 
-This project demo distributed transactions in Microservices with Kafka Streams and Spring Boot
+This project demo saga distributed transactions how to work in Microservices with Kafka and Spring Boot
 
 There microservices show as below:
 
