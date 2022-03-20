@@ -15,11 +15,11 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>The demo of spring kafka microservices project</name>
+	<name>The Demo of Distributed Transactions in Spring Kafka Microservices</name>
 	<inceptionYear>2022</inceptionYear>
 
 	<description>
-		This project is example of microservices with Spring Boot, Kafka and distributed transactions.
+		This project demo saga distributed transactions how to work in Microservices with Kafka and Spring Boot.
 	</description>
 
 	<developers>
