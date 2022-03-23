@@ -12,6 +12,10 @@ There microservices show as below:
 
 ## Description
 
+Here's the diagram with architecture:
+
+![image](./Images/Architecture.png)
+
 1. `Order-Service` send a new `Order` -> `OrderStatus.NEW`
 2. `Payment-Service` and `Inventory-Service` receive `Order` and handle it by performing a local transaction on the data
 3. `Payment-Service` and `Inventory-Service` send a response `Order` -> `OrderStatus.ACCEPT` or `OrderStatus.REJECT`
