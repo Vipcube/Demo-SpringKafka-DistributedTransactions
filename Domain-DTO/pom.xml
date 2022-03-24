@@ -17,4 +17,11 @@
 	<description>
 		This module is contain example domain dto of this project.
 	</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+	</dependencies>
 </project>

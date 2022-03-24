@@ -7,6 +7,7 @@ import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
 import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,7 @@ public class OrderController {
 	}
 
 	@PostMapping
-	public Order create( @RequestBody Order order ) {
+	public Order create( @Validated @RequestBody Order order ) {
 		order.setId( id.incrementAndGet() );
 		template.send( "orders", order.getId(), order );
 		log.info( "Sent: {}", order );
